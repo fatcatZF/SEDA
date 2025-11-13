@@ -16,7 +16,7 @@ grpcio==1.73.1
 gym==0.26.2
 gym-notices==0.0.8
 gymnasium==1.1.1
-h2o==3.46.0.7
+h2o==3.46.0.8
 hf-xet==1.1.5
 huggingface-hub==0.33.1
 huggingface-sb3==3.0
