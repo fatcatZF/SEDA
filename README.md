@@ -21,5 +21,9 @@ python evaluate_seda.py --env=cartpole --policy-type=dqn
 - policy-type: the corresponding policy
 
 # Plot of Drift Scores
-![CartPole Semantic](figures/cartpole_semantic.png) ![CartPole Noisy Observation](figures/cartpole_noise.png)
+<figure>
+  <img src="figures/cartpole_semantic" width="50">
+  <figcaption>Figure 1: A sample image.</figcaption>
+</figure>
+
 
