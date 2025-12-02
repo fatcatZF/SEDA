@@ -68,3 +68,15 @@ python evaluate_seda.py --env=cartpole --policy-type=dqn
 </div>
 
 
+<div style="display: flex; gap: 20px;">
+  <figure style="text-align: center;">
+    <img src="figures/humanoid_semantic.png" width="300">
+    <figcaption>Humanoid Semantic Drift</figcaption>
+  </figure>
+  <figure style="text-align: center;">
+    <img src="figures/humanoid_noise.png" width="300">
+    <figcaption>Humanoid Noisy Observations</figcaption>
+  </figure>
+</div>
+
+
