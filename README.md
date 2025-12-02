@@ -22,8 +22,8 @@ python evaluate_seda.py --env=cartpole --policy-type=dqn
 
 # Plot of Drift Scores
 <figure>
-  <img src="figures/cartpole_semantic" width="50">
-  <figcaption>Figure 1: A sample image.</figcaption>
+  <img src="figures/cartpole_semantic.png" width="50">
+  <figcaption>CartPole Semantic Drift</figcaption>
 </figure>
 
 
