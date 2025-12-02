@@ -26,7 +26,6 @@ python evaluate_seda.py --env=cartpole --policy-type=dqn
     <img src="figures/cartpole_semantic.png" width="300">
     <figcaption>CartPole Semantic Drift</figcaption>
   </figure>
-
   <figure style="text-align: center;">
     <img src="figures/cartpole_noise.png" width="300">
     <figcaption>CartPole Noisy Observations</figcaption>
@@ -42,7 +41,28 @@ python evaluate_seda.py --env=cartpole --policy-type=dqn
     <img src="figures/lunarLander_noise.png" width="300">
     <figcaption>LunarLander Noisy Observations</figcaption>
   </figure>
+</div>
 
+<div style="display: flex; gap: 20px;">
+  <figure style="text-align: center;">
+    <img src="figures/lunraLander_semantic.png" width="300">
+    <figcaption>LurarLander Semantic Drift</figcaption>
+  </figure>
+  <figure style="text-align: center;">
+    <img src="figures/lunarLander_noise.png" width="300">
+    <figcaption>LunarLander Noisy Observations</figcaption>
+  </figure>
+</div>
+
+<div style="display: flex; gap: 20px;">
+  <figure style="text-align: center;">
+    <img src="figures/hopper_semantic.png" width="300">
+    <figcaption>Hopper Semantic Drift</figcaption>
+  </figure>
+  <figure style="text-align: center;">
+    <img src="figures/hopper_noise.png" width="300">
+    <figcaption>Hopper Noisy Observations</figcaption>
+  </figure>
 </div>
 
 
