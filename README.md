@@ -12,4 +12,8 @@ Finally, following the EDSVM evaluation protocol, we assess SEDA using several c
 
 
 # Evaluation
+To evaluate the drift detectors for an environment, run
+```
+python evaluate
+```
 
