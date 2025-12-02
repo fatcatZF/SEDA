@@ -4,11 +4,11 @@ This paper introduces SEDA, an improvement of EDSVM that replaces the kernel-bas
 Finally, following the EDSVM evaluation protocol, we assess SEDA using several change point detection algorithms to determine the best algorithm for integrating SEDA. Overall, SEDA retains the strengths of EDSVM while overcoming its scalability limitations, making it a practical choice for robust MLOps pipelines in real-world RL deployments.
 
 # Environments and Corresponding Agents
-- CartPole
-- LunarLander
-- Hopper
-- HalfCheetah
-- Humanoid
+- CartPole with [DQN](https://huggingface.co/sb3/dqn-CartPole-v1)
+- LunarLander with [PPO](https://huggingface.co/sb3/ppo-LunarLander-v2)
+- Hopper with [PPO](https://huggingface.co/sb3/ppo-Hopper-v3)
+- HalfCheetah with [SAC](https://huggingface.co/sb3/ppo-HalfCheetah-v3)
+- Humanoid with [SAC](https://huggingface.co/fatcat22/sac-Humanoid-v5)
 
 
 # Evaluation
