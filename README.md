@@ -36,7 +36,7 @@ python evaluate_seda.py --env=cartpole --policy-type=dqn
 <div style="display: flex; gap: 20px;">
   <figure style="text-align: center;">
     <img src="figures/lunarLander_semantic.png" width="300">
-    <figcaption>LunarLander Semantic Drift</figcaption>
+    <figcaption>LurarLander Semantic Drift</figcaption>
   </figure>
   <figure style="text-align: center;">
     <img src="figures/lunarLander_noise.png" width="300">
