@@ -14,6 +14,12 @@ Finally, following the EDSVM evaluation protocol, we assess SEDA using several c
 # Evaluation
 To evaluate the drift detectors for an environment, run
 ```
-python evaluate
+python evaluate_seda.py --env=cartpole --policy-type=dqn 
 ```
+## Arguments:
+- env: the environment
+- policy-type: the corresponding policy
+
+# Plot of Drift Scores
+
 
