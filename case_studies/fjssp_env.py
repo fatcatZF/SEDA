@@ -8,7 +8,7 @@ class FJSSPEnv(gym.Env):
     def __init__(self, duration_param_args=None):
         super(FJSSPEnv, self).__init__()
         
-        # Machines / CPPUs 
+        # 1. Digital Twin Configuration: CPPUs (Machines)
         self.machines = [f'cppu{i}' for i in range(10)]
         self.capability_map = {
             'configure': ['cppu0'], 
@@ -22,7 +22,6 @@ class FJSSPEnv(gym.Env):
             'store':     ['cppu2', 'cppu5', 'cppu9']
         }
 
-        # Log-based parameters for the Digital Twin
         self.duration_params = {
             ('cppu0', 'configure'): (3.214, 0.1), ('cppu1', 'label'): (1.471, 0.527),
             ('cppu3', 'mill'): (3.461, 0.1), ('cppu7', 'heating'): (-1.648, 1.048),
@@ -32,22 +31,32 @@ class FJSSPEnv(gym.Env):
         }
         if duration_param_args: self.duration_params.update(duration_param_args)
 
-        # Restored Job Routings
         self.job_routings = {
             'power_supply': ['configure', 'label', 'box', 'store'],
             'brake': ['mill', 'heating', 'inspect', 'box', 'label', 'store'],
             'gear': ['sintering', 'inspect', 'heating', 'coating', 'inspect', 'box', 'store']
         }
 
-        # 2. Spaces (Total ops = 17)
+        # 2. Spaces
         self.total_ops = 17 
         self.observation_space = spaces.Dict({
             "op_nodes": spaces.Box(low=0, high=1e5, shape=(self.total_ops, 4), dtype=np.float32), 
             "mc_nodes": spaces.Box(low=0, high=1e5, shape=(10, 2), dtype=np.float32),
             "edge_index_om": spaces.Box(low=-1, high=self.total_ops, shape=(2, 60), dtype=np.int32)
         })
-        # Action 0 = Wait/Tick, 1-N = Possible Job-Machine assignments
         self.action_space = spaces.Discrete(41) 
+
+    def _get_info(self):
+        """Creates the metadata dictionary for the Actor-Critic indexing."""
+        mapping = {}
+        for j_idx, job in enumerate(self.jobs):
+            if not job['finished']:
+                mapping[j_idx] = job['ops_indices'][job['step']]
+        
+        return {
+            "job_to_op_map": mapping,
+            "compatible_pairs": self._get_compatible_pairs()
+        }
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
@@ -69,13 +78,9 @@ class FJSSPEnv(gym.Env):
                 job_dict['ops_indices'].append(op_id)
             self.jobs.append(job_dict)
             
-        return self._get_obs(), {}
+        return self._get_obs(), self._get_info()
 
     def step(self, action_idx):
-        """
-        Decision occurs at current_time.
-        Time automatically increases by 1.0 after the attempt.
-        """
         all_pairs = self._get_compatible_pairs()
         reward = 0.0
         
@@ -85,7 +90,6 @@ class FJSSPEnv(gym.Env):
             job = self.jobs[job_idx]
             op = self.op_list[job['ops_indices'][job['step']]]
 
-            # Digital Twin Constraint: Can only start if physically possible right now
             if job['ready_at'] <= self.current_time and self.mc_available_at[mc_id] <= self.current_time:
                 mu, sigma = self.duration_params.get((mc_id, op['skill']), self.duration_params['default'])
                 duration = np.random.lognormal(mu, sigma)
@@ -98,35 +102,31 @@ class FJSSPEnv(gym.Env):
                 
                 if job['step'] >= len(job['ops_indices']):
                     job['finished'] = True
-                    reward += 10.0 # Completion bonus
+                    reward += 10.0
             else:
-                # Penalty for attempting an impossible assignment at this time tick
                 reward -= 1.0 
 
-        # --- THE AUTOMATIC TICK ---
+        # Time Auto-Tick
         self.current_time += 1.0
-        reward -= 0.1 # Cost of time passing (encourages efficiency)
+        reward -= 0.1 
         
-        return self._get_obs(), reward, self._is_done(), False, {}
+        return self._get_obs(), reward, self._is_done(), False, self._get_info()
 
     def _get_obs(self):
-        # 1. Op Features: [StatusBit1, StatusBit2, ReadyIn, Progress]
         op_feats = np.zeros((self.total_ops, 4), dtype=np.float32)
         for i, op in enumerate(self.op_list):
             job = self.jobs[op['job_idx']]
-            status = [1, 1] if op['finished'] else ([0, 1] if op['started'] else [1, 0])
+            status = [1, 1] if op['finished'] else ([1, 0] if op['started'] else [0, 0])
             progress = job['step'] / len(job['ops_indices'])
             ready_in = max(0.0, job['ready_at'] - self.current_time)
             op_feats[i] = status + [ready_in, progress]
 
-        # 2. Machine Features: [FreeIn, CapCount]
         mc_feats = np.zeros((10, 2), dtype=np.float32)
         for i, m in enumerate(self.machines):
             free_in = max(0.0, self.mc_available_at[m] - self.current_time)
             cap_count = len([s for s, ml in self.capability_map.items() if m in ml])
             mc_feats[i] = [free_in, cap_count]
 
-        # 3. Graph Edges (O-M)
         edge_index = np.full((2, 60), -1, dtype=np.int32)
         edges = [[], []]
         for i, op in enumerate(self.op_list):
@@ -142,7 +142,6 @@ class FJSSPEnv(gym.Env):
         return {"op_nodes": op_feats, "mc_nodes": mc_feats, "edge_index_om": edge_index}
 
     def _get_compatible_pairs(self):
-        # Maps action indices to Job-Machine combinations
         actions = []
         for i, job in enumerate(self.jobs):
             if not job['finished']:
@@ -155,4 +154,3 @@ class FJSSPEnv(gym.Env):
         return all(j['finished'] for j in self.jobs)
 
 gym.register('FJSSP-v0', entry_point=FJSSPEnv)
-
