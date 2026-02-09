@@ -5,7 +5,7 @@ import numpy as np
 
 
 class FJSSPEnv(gym.Env):
-    def __init__(self, duration_param_args=None):
+    def __init__(self, duration_param_args: dict=None):
         super(FJSSPEnv, self).__init__()
         
         # 1. Digital Twin Configuration: CPPUs (Machines)
@@ -152,5 +152,11 @@ class FJSSPEnv(gym.Env):
 
     def _is_done(self):
         return all(j['finished'] for j in self.jobs)
+    
 
-gym.register('FJSSP-v0', entry_point=FJSSPEnv)
+
+
+def get_fjssp_env(duration_param_args: dict=None):
+    gym.register('FJSSP-v0', entry_point=FJSSPEnv)
+    return gym.make("FJSSP-v0", duration_param_args)
+

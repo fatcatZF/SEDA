@@ -165,7 +165,7 @@ class ActorCritic(nn.Module):
         else:
             all_logits = wait_logit
             
-        return v_s, all_logits
+        return v_s, all_logits, h_op, h_mc
     
 
 
