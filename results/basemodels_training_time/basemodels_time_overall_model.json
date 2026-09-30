@@ -1,0 +1,47 @@
+{
+  "deeplearning": {
+    "n_models": 3.066666666666667,
+    "total_time_s": 171.926,
+    "total_time_s_std": 205.65392240444461,
+    "mean_time_s": 47.12486666666667,
+    "mean_time_s_std": 48.27282293326678,
+    "max_time_s": 93.51946666666666,
+    "share_of_total": 0.8083187350196854
+  },
+  "xgboost": {
+    "n_models": 6.0,
+    "total_time_s": 19.69053333333333,
+    "total_time_s_std": 33.18797629965808,
+    "mean_time_s": 3.281755555555555,
+    "mean_time_s_std": 5.531329383276346,
+    "max_time_s": 5.99,
+    "share_of_total": 0.0925760326876851
+  },
+  "gbm": {
+    "n_models": 7.0,
+    "total_time_s": 15.444266666666667,
+    "total_time_s_std": 13.442151618447598,
+    "mean_time_s": 2.2063238095238096,
+    "mean_time_s_std": 1.9203073740639423,
+    "max_time_s": 3.6629333333333327,
+    "share_of_total": 0.07261199641303058
+  },
+  "drf": {
+    "n_models": 2.0,
+    "total_time_s": 5.3712,
+    "total_time_s_std": 4.409357660450984,
+    "mean_time_s": 2.6856,
+    "mean_time_s_std": 2.204678830225492,
+    "max_time_s": 3.11,
+    "share_of_total": 0.02525296691331
+  },
+  "glm": {
+    "n_models": 1.0,
+    "total_time_s": 0.2638,
+    "total_time_s_std": 0.41721301513735165,
+    "mean_time_s": 0.2638,
+    "mean_time_s_std": 0.41721301513735165,
+    "max_time_s": 0.2638,
+    "share_of_total": 0.0012402689662889441
+  }
+}
