@@ -102,7 +102,7 @@ def main():
     elif args.model_type == "model_on":
         pattern = "model_[0-9]_on"
     elif args.model_type == "model_pruned":
-         pattern = "model_pruned_[0-9]"
+         pattern = "model_[0-9]_pruned"
 
     model_pattern = os.path.join(model_folder, pattern)
     matching_models = glob.glob(model_pattern)
