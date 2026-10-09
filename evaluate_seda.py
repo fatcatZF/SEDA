@@ -56,7 +56,7 @@ def main():
     print("Parsed arguments: ")
     print(args) 
 
-    h2o.init(max_mem_size='4G')
+    h2o.init(max_mem_size='20G')
 
     env_dict = {
       "cartpole" : "CartPole-v1",
