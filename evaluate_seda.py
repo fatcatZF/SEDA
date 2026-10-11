@@ -56,7 +56,7 @@ def main():
     print("Parsed arguments: ")
     print(args) 
 
-    h2o.init(max_mem_size='20G')
+    h2o.init(max_mem_size='4G')
 
     env_dict = {
       "cartpole" : "CartPole-v1",
@@ -103,6 +103,8 @@ def main():
         pattern = "model_[0-9]_on"
     elif args.model_type == "model_pruned":
          pattern = "model_[0-9]_pruned"
+    elif args.model_type == "model_pruned20":
+         pattern = "model_[0-9]_pruned20"
 
     model_pattern = os.path.join(model_folder, pattern)
     matching_models = glob.glob(model_pattern)
@@ -412,6 +414,7 @@ def main():
                             fa += 1
                     if t >= args.env1_steps:
                             delay = t - args.env1_steps
+                            break 
                 
             single_best_alarms_ks_sem.append(fa)
             single_best_delays_ks_sem.append(delay)
@@ -471,6 +474,7 @@ def main():
                             fa += 1
                     if t >= args.env1_steps:
                             delay = t - args.env1_steps
+                            break 
                 
             single_best_alarms_ks_noise.append(fa)
             single_best_delays_ks_noise.append(delay)
@@ -536,6 +540,7 @@ def main():
                             fa += 1
                     if t >= args.env1_steps:
                             delay = t - args.env1_steps
+                            break 
                 
             ens_best_alarms_ks_sem.append(fa)
             ens_best_delays_ks_sem.append(delay)
@@ -595,6 +600,7 @@ def main():
                             fa += 1
                     if t >= args.env1_steps:
                             delay = t - args.env1_steps
+                            break 
                 
             ens_best_alarms_ks_noise.append(fa)
             ens_best_delays_ks_noise.append(delay)
@@ -662,6 +668,7 @@ def main():
                             fa += 1
                     if t >= args.env1_steps:
                             delay = t - args.env1_steps
+                            break 
                 
             ens_all_alarms_ks_sem.append(fa)
             ens_all_delays_ks_sem.append(delay)
@@ -721,6 +728,7 @@ def main():
                             fa += 1
                     if t >= args.env1_steps:
                             delay = t - args.env1_steps
+                            break 
                 
             ens_all_alarms_ks_noise.append(fa)
             ens_all_delays_ks_noise.append(delay)
